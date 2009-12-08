@@ -1,0 +1,6 @@
+* TODO Define the tetrahedron
+* TODO Learn a syntax for expressing matrices "explicitly"
+  Macrocharacters?
+* TODO Type variables, and restrict search
+  As of 2009/12/08, variables are untyped.  The search will go more
+  quickly if one restricts variables to a certain domain.
