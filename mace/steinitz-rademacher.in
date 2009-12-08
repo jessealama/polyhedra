@@ -1,0 +1,73 @@
+formulas(sos).
+
+% Setting up the language: three types of objects, one incidence relation
+
+% Everything is either a vertex, edge, or face
+all x (V(x) | E(x) | F(x)).
+
+% Non-triviality
+% exists x (V(x)).
+% exists x (E(x)).
+% exists x (F(x)).
+
+% The sets of vertices, edges, and faces are disjoint
+all x (V(x) -> -E(x)).
+all x (V(x) -> -F(x)).
+all x (E(x) -> -F(x)).
+
+% Symmetric incidence relation
+% all x all y (I(x,y) -> I(y,x)).
+
+% No two objects of the same type are incident
+all x all y ((V(x) & V(y)) -> -I(x,y)).
+all x all y ((E(x) & E(y)) -> -I(x,y)).
+all x all y ((F(x) & F(y)) -> -I(x,y)).
+
+% "Transitivity"
+all x all y all z ((V(x) & E(y) & F(z) & I(x,y) & I(y,z)) -> I(x,z)).
+
+% every edge is incident with at exactly two vertices
+all x (E(x) -> exists y exists z (y != z & V(y) & V(z) & I(y,x) & I(z,x) & all w (V(w) & I(w,x) -> (w = y | w = z)))).
+
+% every edge is incident with at least two vertices
+% all x (E(x) -> exists y exists z (y != z & V(y) & V(z) & I(y,x) & I(z,x))).
+
+% every edge is incident with at exactly two faces
+all x (E(x) -> exists y exists z (y != z & F(y) & F(z) & I(x,y) & I(x,z) & all w (F(w) & I(x,w) -> (w = y | w = z)))).
+
+% every edge is incident with at least two faces
+% all x (E(x) -> exists y exists z (y != z & F(y) & F(z) & I(x,y) & I(x,z))).
+
+% for every vertex v and every face f, there exist exactly two edges that are indicent with both v and f
+all v all f (V(v) & F(f) -> exists e1 exists e2 (E(e1) & E(e2) & e1 != e2 & I(v,e1) & I(v,e2) & all e ((E(e) & I(v,e) & I(e,f)) -> (e = e1 | e = e2)))).
+
+% every vertex is incident with something
+all v (V(v) -> exists x I(v,x)).
+% Stronger form: every vertex is incident with an edge and a face
+% all v (V(v) -> exists e exists f (E(e) & F(f) & I(v,e) & I(v,f))).
+
+% every face is incident with something
+all f (F(f) -> exists x (I(x,f))).
+% Stronger form: every face is incident with one edge and one vertex
+% all f (F(f) -> exists v exists e (V(v) & E(e) & I(v,f) & I(e,f))).
+
+% simpliciality: every face is a triangle
+% all f (F(f) -> exists e1 exists e2 exists e3 (E(e1) & E(e2) & E(e3) & e1 != e2 & e2 != e3 & e3 != e1 & I(e1,f) & I(e2,f) & I(e3,f) & all e ((E(e) & I(e,f)) -> (e = e1 | e = e2 | e = e3)))).
+
+% Cardinality restrictions
+V(0).
+V(1).
+V(2).
+V(3).
+E(4).
+E(5).
+E(6).
+E(7).
+E(8).
+E(9).
+F(10).
+F(11).
+F(12).
+F(13).
+
+end_of_list.
