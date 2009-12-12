@@ -1,6 +1,23 @@
-* TODO Define the tetrahedron
-* TODO Learn a syntax for expressing matrices "explicitly"
+* DONE Define the tetrahedron
+  CLOSED: [2009-12-11 Fri 09:40]
+
+  It's easy to specify it without thinking about the symmetry and transitivity conditions. We need a function for computing the symmetric and transitive closure of an incidence matrix.
+* TODO Define a function for computing an array given a list of incidences
+* TODO Define a function for computing the symmetric and transitive closure of an incidence matrix
+* DONE Learn a syntax for expressing matrices "explicitly"
+
+  CLOSED: [2009-12-11 Fri 09:40]
   Macrocharacters?
+  It's "#nA", where n is a literal integer specifying the number of rows.
+* TODO A more compact representation of polyhedron structures
+  Four pieces of data: three natural numbers V, E, F, and an array I.
+  At least one of the natural numbers should be positive (to ensure
+  that we are not dealing with an empty domain).  The dimensions of I
+  should be (V + E + F) x (V + E + F).  Implicitly, the vertices are
+  the natural numbers from 0 to V; the edges are the natural numbers
+  from V + 1 to V + E; and the faces are the natural numbers from V +
+  E + 1 to V + E + F.  Reading the incidence relation should be clear.
+* TODO Define a simple GA search procedure
 * TODO Type variables, and restrict search
   As of 2009/12/08, variables are untyped.  The search will go more
   quickly if one restricts variables to a certain domain.
