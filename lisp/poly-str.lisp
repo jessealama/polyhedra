@@ -117,6 +117,41 @@
 		     F)
 	      (equal (array-dimensions I) (list n n))))))
 
+(defun upto (n)
+  "The list of integers from 0 to N, exclusive."
+  (let (l)
+    (dotimes (i n (reverse l))
+      (push i l))))
+
+(defun from-to (m n)
+  "The list of integers starting with (i.e., including) M, going up to but exlcuding N."
+  (let (l)
+    (do ((i m (1+ i)))
+	((= i n) (reverse l))
+      (push i l))))
+
+(defun make-poly-str (num-vertices num-edges num-faces incidence-matrix)
+  (list (upto (+ num-vertices num-edges num-faces))
+	(upto num-vertices)
+	(from-to num-vertices (+ num-vertices num-edges))
+	(from-to (+ num-vertices num-edges) (+ num-vertices num-edges num-faces))
+	incidence-matrix))
+
+(defun cardinality (poly-str)
+  (length (first poly-str)))
+
+(defun num-vertices (poly-str)
+  (length (second poly-str)))
+
+(defun num-edges (poly-str)
+  (length (third poly-str)))
+
+(defun num-faces (poly-str)
+  (length (fourth poly-str)))
+
+(defun incidence-matrix (poly-str)
+  (fifth poly-str))
+
 ;;; Assignments
 
 (defun assignment-value (var assignment)
