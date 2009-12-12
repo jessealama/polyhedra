@@ -233,30 +233,55 @@
 			(val-2 (assignment-value var-2 assign)))
 		    (not (zerop (aref ran val-1 val-2))))))))))
 
+(defvar steinitz-rademacher-axioms
+  '(
+    ; symmetric incidence relation
+   (all ?x (all ?y (implies (I ?x ?y) (I ?y ?x))))
+    ; No two objects of the same type are incident
+   (all ?x (all ?y (implies (and (V ?x) (V ?y)) (not (I ?x ?y)))))
+   (all ?x (all ?y (implies (and (E ?x) (E ?y)) (not (I ?x ?y)))))
+   (all ?x (all ?y (implies (and (F ?x) (F ?y)) (not (I ?x ?y)))))
+   ; a kind of transitivity
+   (all ?x 
+	(all ?y 
+	     (all ?z 
+		  (implies 
+		   (and (V ?x) (E ?y) (F ?z) (I ?x ?y) (I ?y ?z))
+		   (I ?x ?z)))))))
+
+(defun steinitz-rademacher? (poly-str)
+  "Determine whether a polyhedron is a Steinitz-Rademacher polyhedron."
+  (every #'(lambda (ax) (true? ax poly-str nil)) steinitz-rademacher-axioms))
 
 ;;; Some specific polyhedra
 
 (defun array-from-incidences (num-elements &rest incidences)
-  (let ((a (make-array (list num-elements num-elements) :element-type 'bit)))
-    a))
+  (let ((a (make-array (list num-elements num-elements) 
+		       :element-type 'bit
+		       :initial-element 0)))
+    (dolist (incidence incidences a)
+      (let ((x (first incidence))
+	    (y (second incidence)))
+	(setf (aref a x y) 1)))))
 
 (defvar tetrahedron
-  (list 14
+  (list '(0 1 2 3 4 5 6 7 8 9 10 11 12 13)
 	'(0 1 2 3)
 	'(4 5 6 7 8 9)
 	'(10 11 12 13)
-	(transitive-symmetric-closure
-	 #2A((0 0 0 0 1 0 1 1 0 0 0 0 0 0)
-	     (0 0 0 0 1 1 0 0 1 0 0 0 0 0)
-	     (0 0 0 0 0 1 1 0 0 1 0 0 0 0)
-	     (0 0 0 0 0 0 0 1 1 1 0 0 0 0)
-	     (0 0 0 0 0 0 0 0 0 0 1 1 0 0)
-	     (0 0 0 0 0 0 0 0 0 0 1 0 1 0)
-	     (0 0 0 0 0 0 0 0 0 0 1 0 0 1)
-	     (0 0 0 0 0 0 0 0 0 0 0 1 0 1)
-	     (0 0 0 0 0 0 0 0 0 0 0 1 1 0)
-	     (0 0 0 0 0 0 0 0 0 0 0 0 1 1)
-	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0)))))
+	#2A((0 0 0 0 1 0 1 1 0 0 0 0 0 0)
+	    (0 0 0 0 1 1 0 0 1 0 0 0 0 0)
+	    (0 0 0 0 0 1 1 0 0 1 0 0 0 0)
+	    (0 0 0 0 0 0 0 1 1 1 0 0 0 0)
+	    (0 0 0 0 0 0 0 0 0 0 1 1 0 0)
+	    (0 0 0 0 0 0 0 0 0 0 1 0 1 0)
+	    (0 0 0 0 0 0 0 0 0 0 1 0 0 1)
+	    (0 0 0 0 0 0 0 0 0 0 0 1 0 1)
+	    (0 0 0 0 0 0 0 0 0 0 0 1 1 0)
+	    (0 0 0 0 0 0 0 0 0 0 0 0 1 1)
+	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0))))
+
+(provide 'poly-str)
