@@ -2,7 +2,8 @@
   CLOSED: [2009-12-11 Fri 09:40]
 
   It's easy to specify it without thinking about the symmetry and transitivity conditions. We need a function for computing the symmetric and transitive closure of an incidence matrix.
-* TODO Define a function for computing an array given a list of incidences
+* DONE Define a function for computing an array given a list of incidences
+  CLOSED: [2009-12-12 Sat 15:35]
 * TODO Define a function for computing the symmetric and transitive closure of an incidence matrix
 * DONE Learn a syntax for expressing matrices "explicitly"
 
