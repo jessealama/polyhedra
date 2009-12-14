@@ -18,7 +18,8 @@
   the natural numbers from 0 to V; the edges are the natural numbers
   from V + 1 to V + E; and the faces are the natural numbers from V +
   E + 1 to V + E + F.  Reading the incidence relation should be clear.
-* TODO Define a simple GA search procedure
+* DONE Define a simple GA search procedure
+  CLOSED: [2009-12-14 Mon 09:24]
 * TODO Type variables, and restrict search
   As of 2009/12/08, variables are untyped.  The search will go more
   quickly if one restricts variables to a certain domain.
