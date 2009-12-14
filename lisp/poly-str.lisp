@@ -349,4 +349,16 @@ according to the typed presentation of the axioms."
 	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0))))
 
+(defvar simplest-sr-poly
+  (list '(0 1 2 3 4 5)
+	'(0 1)
+	'(2 3)
+	'(4 5)
+	#2A((0 0 1 1 1 1)
+	    (0 0 1 1 1 1)
+	    (1 1 0 0 1 1)
+	    (1 1 0 0 1 1)
+	    (1 1 1 1 0 0)
+	    (1 1 1 1 0 0))))
+
 (provide 'poly-str)
