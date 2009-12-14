@@ -48,6 +48,18 @@
 (defun bound-variable (quantified-formula)
   (cadr quantified-formula))
 
+(defun bare-variable? (variable)
+  (symbolp variable))
+
+(defun typed-variable? (variable)
+  (not (bare-variable? variable)))
+
+(defun variable-type (typed-variable)
+  (second typed-variable))
+
+(defun variable-name (typed-variable)
+  (first typed-variable))
+
 (defun v-statement? (formula)
   (eq (car formula) 'V))
 
@@ -82,6 +94,13 @@
 
 (defun face-range (poly-str)
   (fourth poly-str))
+
+(defun variable-domain (variable-type poly-str)
+  (if (eq variable-type 'V)
+      (vertex-range poly-str)
+      (if (eq variable-type 'E)
+	  (edge-range poly-str)
+	  (face-range poly-str))))
 
 (defun incidence-matrix (poly-str)
   (fifth poly-str))
@@ -185,18 +204,36 @@
 		(conjuncts formula)))
 	((universal? formula)
 	 (let ((matrix (matrix formula))
-	       (var (bound-variable formula))
-	       (dom (domain poly-str)))
-	   (every #'(lambda (a)
-		      (true? matrix poly-str (update-assignment var assign a)))
-		  dom)))
+	       (var (bound-variable formula)))
+	   (if (typed-variable? var)
+	       (let ((var-type (variable-type var))
+		     (var-name (variable-name var)))
+		 (every #'(lambda (a)
+			    (true? matrix
+				   poly-str 
+				   (update-assignment var-name assign a)))
+			(variable-domain var-type poly-str)))
+	       (every #'(lambda (a)
+			  (true? matrix 
+				 poly-str
+				 (update-assignment var assign a)))
+		      (domain poly-str)))))
 	((existential? formula)
 	 (let ((matrix (matrix formula))
-	       (var (bound-variable formula))
-	       (dom (domain poly-str)))
-	   (some #'(lambda (a)
-		       (true? matrix poly-str (update-assignment var assign a)))
-		   dom)))
+	       (var (bound-variable formula)))
+	   (if (typed-variable? var)
+	       (let ((var-type (variable-type var))
+		     (var-name (variable-name var)))
+		 (some #'(lambda (a)
+			   (true? matrix
+				  poly-str
+				  (update-assignment var-name assign a)))
+		       (variable-domain var-type poly-str)))
+	       (some #'(lambda (a)
+			 (true? matrix
+				poly-str
+				(update-assignment var assign a)))
+		     (domain poly-str)))))
 	(t ;; atomic case
 	 (cond ((equation? formula)
 		(let ((var-1 (lhs formula))
@@ -249,9 +286,37 @@
 		   (and (V ?x) (E ?y) (F ?z) (I ?x ?y) (I ?y ?z))
 		   (I ?x ?z)))))))
 
+(defvar steinitz-rademacher-axioms-typed
+  '(
+    ; No two objects of the same type are incident
+    (all (?x V) (all (?y V) (not (I ?x ?y))))
+    (all (?x E) (all (?y E) (not (I ?x ?y))))
+    (all (?x F) (all (?y F) (not (I ?x ?y))))
+   ; a kind of transitivity
+   (all (?x V)
+	(all (?y E)
+	     (all (?z F)
+		  (implies 
+		   (and (I ?x ?y) (I ?y ?z))
+		   (I ?x ?z)))))))
+
 (defun steinitz-rademacher? (poly-str)
   "Determine whether a polyhedron is a Steinitz-Rademacher polyhedron."
-  (every #'(lambda (ax) (true? ax poly-str nil)) steinitz-rademacher-axioms))
+  (let ((failed nil))
+    (dolist (ax steinitz-rademacher-axioms)
+      (unless (true? ax poly-str nil)
+	(push ax failed)))
+    (or (null failed) failed)))
+
+(defun steinitz-rademacher-typed? (poly-str)
+  "Determine whether a polyhedron is a Steinitz-Rademacher polyhedron,
+according to the typed presentation of the axioms."
+  (let ((failed nil))
+    (dolist (ax steinitz-rademacher-axioms-typed)
+      (unless (true? ax poly-str nil)
+	(push ax failed)))
+    (or (null failed) failed)))
+
 
 ;;; Some specific polyhedra
 
