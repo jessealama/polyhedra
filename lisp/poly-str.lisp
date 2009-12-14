@@ -83,17 +83,35 @@
 
 ;;; Structures
 
-(defun domain (poly-str)
-  (first poly-str))
-
-(defun vertex-range (poly-str)
+(defun type-vector (poly-str)
   (second poly-str))
 
+(defun cardinality (poly-str)
+  (first poly-str))
+
+(defun domain (poly-str)
+  (upto (cardinality poly-str)))
+
+(defun vertex-range (poly-str)
+  (let ((tv (type-vector poly-str))
+	(vertices nil))
+    (dotimes (i (cardinality poly-str) vertices)
+      (when (= (aref tv i) 0)
+	(push i vertices)))))
+
 (defun edge-range (poly-str)
-  (third poly-str))
+  (let ((tv (type-vector poly-str))
+	(edges nil))
+    (dotimes (i (cardinality poly-str) edges)
+      (when (= (aref tv i) 1)
+	(push i edges)))))
 
 (defun face-range (poly-str)
-  (fourth poly-str))
+  (let ((tv (type-vector poly-str))
+	(faces nil))
+    (dotimes (i (cardinality poly-str) faces)
+      (when (= (aref tv i) 2)
+	(push i faces)))))
 
 (defun variable-domain (variable-type poly-str)
   (if (eq variable-type 'V)
@@ -103,7 +121,7 @@
 	  (face-range poly-str))))
 
 (defun incidence-matrix (poly-str)
-  (fifth poly-str))
+  (third poly-str))
 
 (defun polyhedron-structure? (x)
   (and (listp x)
@@ -150,24 +168,19 @@
 	  ((= i n) (reverse l))
 	(push i l)))))
 
-(defun make-poly-str (num-vertices num-edges num-faces incidence-matrix)
-  (list (upto (+ num-vertices num-edges num-faces))
-	(upto num-vertices)
-	(from-to num-vertices (+ num-vertices num-edges))
-	(from-to (+ num-vertices num-edges) (+ num-vertices num-edges num-faces))
+(defun make-poly-str (genome incidence-matrix)
+  (list (length genome)
+	genome
 	incidence-matrix))
 
-(defun cardinality (poly-str)
-  (length (first poly-str)))
-
 (defun num-vertices (poly-str)
-  (length (second poly-str)))
+  (length (vertex-range poly-str)))
 
 (defun num-edges (poly-str)
-  (length (third poly-str)))
+  (length (edge-range poly-str)))
 
 (defun num-faces (poly-str)
-  (length (fourth poly-str)))
+  (length (face-range poly-str)))
 
 (defun incidence-matrix (poly-str)
   (fifth poly-str))
@@ -335,10 +348,8 @@ according to the typed presentation of the axioms."
 	(setf (aref a x y) 1)))))
 
 (defvar tetrahedron
-  (list '(0 1 2 3 4 5 6 7 8 9 10 11 12 13)
-	'(0 1 2 3)
-	'(4 5 6 7 8 9)
-	'(10 11 12 13)
+  (list 14
+	#1A(0 0 0 0 1 1 1 1 1 1 2 2 2 2)
 	#2A((0 0 0 0 1 0 1 1 0 0 0 0 0 0)
 	    (0 0 0 0 1 1 0 0 1 0 0 0 0 0)
 	    (0 0 0 0 0 1 1 0 0 1 0 0 0 0)
@@ -355,10 +366,8 @@ according to the typed presentation of the axioms."
 	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0))))
 
 (defvar simplest-sr-poly
-  (list '(0 1 2 3 4 5)
-	'(0 1)
-	'(2 3)
-	'(4 5)
+  (list 6
+	#1A(0 0 1 1 2 2)
 	#2A((0 0 1 1 1 1)
 	    (0 0 1 1 1 1)
 	    (1 1 0 0 1 1)
