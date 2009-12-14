@@ -144,10 +144,11 @@
 
 (defun from-to (m n)
   "The list of integers starting with (i.e., including) M, going up to but exlcuding N."
-  (let (l)
-    (do ((i m (1+ i)))
-	((= i n) (reverse l))
-      (push i l))))
+  (when (<= m n)
+    (let (l)
+      (do ((i m (1+ i)))
+	  ((= i n) (reverse l))
+	(push i l)))))
 
 (defun make-poly-str (num-vertices num-edges num-faces incidence-matrix)
   (list (upto (+ num-vertices num-edges num-faces))
