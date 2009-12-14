@@ -272,7 +272,11 @@
 
 (defvar steinitz-rademacher-axioms
   '(
-    ; symmetric incidence relation
+    ; non-empty polytope domains
+    (exists ?x (V ?x))
+    (exists ?x (E ?x))
+    (exists ?x (F ?x))
+    ; symmetric incidence relation -- do we really want this?
    (all ?x (all ?y (implies (I ?x ?y) (I ?y ?x))))
     ; No two objects of the same type are incident
    (all ?x (all ?y (implies (and (V ?x) (V ?y)) (not (I ?x ?y)))))
