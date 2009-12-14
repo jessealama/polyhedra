@@ -26,3 +26,7 @@
   CLOSED: [2009-12-14 Mon 12:29]
   As of 2009/12/08, variables are untyped.  The search will go more
   quickly if one restricts variables to a certain domain.
+* DONE Define a notion of mutation
+  CLOSED: [2009-12-14 Mon 14:58]
+  CLOCK: [2009-12-14 Mon 14:36]--[2009-12-14 Mon 14:58] =>  0:22
+

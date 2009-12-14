@@ -2,6 +2,9 @@
 
 (require 'poly-str "poly-str")
 
+(defmacro while (test &body body)
+  `(do nil ((not ,test)) ,@body))
+
 (defun random-permutation (vector)
   (let ((len (length vector)))
     (dotimes (i len vector)
@@ -43,6 +46,36 @@
 (defun random-typed-poly-str (total-cardinality)
   (make-poly-str (random-typed-poly-str-genome total-cardinality)
 		 (random-binary-array total-cardinality)))
+
+(defun mutate-poly-str (poly-str)
+  (format t "mutate called~%")
+  (if (zerop (random 2)) ; mutate the type vector
+      (let* ((genome (type-vector poly-str))
+	     (card (cardinality poly-str))
+	     (new-genome (make-array (list card))))
+	(dotimes (i card)
+	  (setf (aref new-genome i) (aref genome i)))
+	(let ((random-index (random card)))
+	  (let ((type (aref genome random-index)))
+	    (if (= type 0)
+		(setf (aref new-genome random-index) 1)
+		(if (= type 1)
+		    (setf (aref new-genome random-index) 2)
+		    (setf (aref new-genome random-index) 0)))
+	    (make-poly-str new-genome (incidence-matrix poly-str)))))
+      (let* ((matrix (incidence-matrix poly-str))
+	     (card (cardinality poly-str))
+	     (new-matrix (make-array (list card card))))
+	(dotimes (i card)
+	  (dotimes (j card)
+	    (setf (aref new-matrix i j)
+		  (aref matrix i j))))
+	(let ((random-x (random card))
+	      (random-y (random card)))
+	  (if (zerop (aref matrix random-x random-y))
+	      (setf (aref new-matrix random-x random-y) 1)
+	      (setf (aref new-matrix random-x random-y) 0))
+	  (make-poly-str (type-vector poly-str) new-matrix)))))
 
 (defun random-population (num-individuals random-individual-generator)
   (let ((pop nil))
@@ -123,7 +156,7 @@
 (defun best-fitness (population fitness-function)
   (funcall fitness-function (best-individual population fitness-function)))
 
-(defun next-generation (population fitness-function)
+(defun next-generation (population fitness-function mutation-function)
   (let ((pop (sort population #'(lambda (ind-1 ind-2)
 				  (> (funcall fitness-function ind-1)
 				     (funcall fitness-function ind-2))))))
@@ -136,7 +169,10 @@
 		(parent-index-2 (random half)))
 	    (let ((parent-1 (nth parent-index-1 best-half))
 		  (parent-2 (nth parent-index-2 best-half)))
-	      (push (combine parent-1 parent-2) new-gen))))
+	      (let ((new-ind (combine parent-1 parent-2)))
+		(while (zerop (random 20)) ; mutate type vector
+		  (setf new-ind (funcall mutation-function new-ind)))
+		(push new-ind new-gen)))))
 	(append new-gen best-half)))))
 
 (defun poly-str-ga (population-size num-generations cardinality)
@@ -144,13 +180,17 @@
 				#'(lambda ()
 				    (random-poly-str cardinality)))))
     (dotimes (i num-generations pop)
-      (setf pop (next-generation pop #'poly-str-fitness)))))
+      (setf pop (next-generation pop
+				 #'poly-str-fitness
+				 #'mutate-poly-str)))))
 
 (defun typed-poly-str-ga (population-size num-generations cardinality)
   (let ((pop (random-population population-size
 				#'(lambda ()
 				    (random-typed-poly-str cardinality)))))
     (dotimes (i num-generations pop)
-      (setf pop (next-generation pop #'typed-poly-str-fitness)))))
+      (setf pop (next-generation pop 
+				 #'typed-poly-str-fitness
+				 #'mutate-poly-str)))))
 
 ;;; ga.lisp ends here
