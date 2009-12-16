@@ -173,7 +173,7 @@
 (defun typed-poly-str-ga (population-size num-generations cardinality)
   (let ((pop (random-population population-size
 				#'(lambda ()
-				    (random-typed-poly-str cardinality)))))
+				    (random-poly-str cardinality)))))
     (dotimes (i num-generations pop)
       (format t "Generation ~S~%" i)
       (setf pop (next-generation pop 
