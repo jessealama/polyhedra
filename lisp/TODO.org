@@ -48,6 +48,9 @@
   are equally likely to be chosen.
 
   It would be worthwhile to investigate and implement this.
+
+  One cool possibility is tournament selection.  Another is roulette wheel
+  selection.
 * TODO Find a solid reference for GAs.
   I'm working from my own memory on this, more or less.  As the
   problems get hairier, my confidence in proceeding flags.  A
@@ -68,9 +71,11 @@
 * TODO Start thinking about statistics tools
   Currently, I'm just running these simualtions and looking at the
   final results.  Surely there's more information available.
-* TODO Revamp fitness function for polyhedron structures
+* DONE Revamp fitness function for polyhedron structures
+  CLOSED: [2009-12-16 Wed 18:46]
   Linear combinations -- weights attached to specific axioms -- is a
   low-hanging fruit.  But how to assign weights?  Should I permit
   negative values?  Non-integral values?
 * TODO Put this on github
-* TODO Define a search procedure where the cardinalities of the vertices, edges, and faces are fixed
+* DONE Define a search procedure where the cardinalities of the vertices, edges, and faces are fixed
+  CLOSED: [2009-12-16 Wed 18:46]
