@@ -73,3 +73,4 @@
   low-hanging fruit.  But how to assign weights?  Should I permit
   negative values?  Non-integral values?
 * TODO Put this on github
+* TODO Define a search procedure where the cardinalities of the vertices, edges, and faces are fixed
