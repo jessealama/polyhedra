@@ -188,9 +188,6 @@
 (defun num-faces (poly-str)
   (length (face-range poly-str)))
 
-(defun incidence-matrix (poly-str)
-  (fifth poly-str))
-
 ;;; Assignments
 
 (defun assignment-value (var assignment)
