@@ -29,4 +29,43 @@
 * DONE Define a notion of mutation
   CLOSED: [2009-12-14 Mon 14:58]
   CLOCK: [2009-12-14 Mon 14:36]--[2009-12-14 Mon 14:58] =>  0:22
+* TODO Revisit next generation procedure
+  As of 2009-12-16, the next generation procedure works like this:
+  select the most fit half of the population; these will all appear in
+  the next generation.  The other half of the next generation is
+  determined as follows: of the fittest half of the current
+  generation, randomly choose two parents, combine them, and add the
+  generated individual to the next generation.
 
+  Apart from the initial selection of the fittest half of the
+  population, this procedure does not satisfy the intuitive selection
+  principle that an individual should contribute to the next
+  generation proportionate to its fitness.  As things stand now, any
+  two individuals from the fittest half of the current generation are
+  equally likely to be selected for reproduction as any other pair
+  from the fittest half of the current generation; one individual
+  could have a rather high fitness and another rather low, but both
+  are equally likely to be chosen.
+
+  It would be worthwhile to investigate and implement this.
+* TODO Find a solid reference for GAs.
+  I'm working from my own memory on this, more or less.  As the
+  problems get hairier, my confidence in proceeding flags.  A
+  general EC reference may suffice.
+** TODO Ask Nic McPhee about this 
+* TODO Store the generation history of individuals
+  Store their parents.  Store the sequence of mutations (if any) that
+  were applied to its genome after the parents's genomes were
+  combined.
+* TODO Move polyhedron-specific code out of ga.lisp
+  In the interest of getting something running, the GA code and the
+  polyhedron code has become a bit blended.  I've tolerated this for
+  long enough.
+* TODO Consider simplicial Steinitz-Rademacher axioms
+  This might make the situation a bit more interesting.
+* TODO Start thinking about statistics tools
+  Currently, I'm just running these simualtions and looking at the
+  final results.  Surely there's more information available.
+* TODO Revamp fitness function for polyhedron structures
+  Linear combinations -- weights attached to specific axioms -- is a
+  low-hanging fruit.
