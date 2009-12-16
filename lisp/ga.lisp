@@ -48,7 +48,6 @@
 		 (random-binary-array total-cardinality)))
 
 (defun mutate-poly-str (poly-str)
-  (format t "mutate called~%")
   (if (zerop (random 2)) ; mutate the type vector
       (let* ((genome (type-vector poly-str))
 	     (card (cardinality poly-str))
@@ -189,6 +188,7 @@
 				#'(lambda ()
 				    (random-typed-poly-str cardinality)))))
     (dotimes (i num-generations pop)
+      (format t "Generation ~S~%" i)
       (setf pop (next-generation pop 
 				 #'typed-poly-str-fitness
 				 #'mutate-poly-str)))))
