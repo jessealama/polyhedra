@@ -57,11 +57,13 @@
   Store their parents.  Store the sequence of mutations (if any) that
   were applied to its genome after the parents's genomes were
   combined.
-* TODO Move polyhedron-specific code out of ga.lisp
+* DONE Move polyhedron-specific code out of ga.lisp
+  CLOSED: [2009-12-16 Wed 14:07]
   In the interest of getting something running, the GA code and the
   polyhedron code has become a bit blended.  I've tolerated this for
   long enough.
-* TODO Consider simplicial Steinitz-Rademacher axioms
+* DONE Consider simplicial Steinitz-Rademacher axioms
+  CLOSED: [2009-12-16 Wed 14:12]
   This might make the situation a bit more interesting.
 * TODO Start thinking about statistics tools
   Currently, I'm just running these simualtions and looking at the

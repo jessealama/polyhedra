@@ -339,6 +339,66 @@
     ; no disconnected faces
     (all (?f F) (exists (?e E) (I ?e ?f)))))
 
+(defvar steinitz-rademacher-axioms-typed-simplicial
+  '(
+    ; I'm reluctant to include these, but they might help
+    (exists (?x V) (top))
+    (exists (?x E) (top))
+    (exists (?x F) (top))
+    ; No two objects of the same type are incident
+    (all (?x V) (all (?y V) (not (I ?x ?y))))
+    (all (?x E) (all (?y E) (not (I ?x ?y))))
+    (all (?x F) (all (?y F) (not (I ?x ?y))))
+   ; a kind of transitivity
+   (all (?x V)
+    (all (?y E)
+     (all (?z F)
+	  (implies 
+	   (and (I ?x ?y) (I ?y ?z))
+	   (I ?x ?z)))))
+    ; edges have exactly two vertices
+    (all (?e E)
+     (exists (?v1 V)
+      (exists (?v2 V)
+        (and (not (= ?v1 ?v2))
+	     (I ?v1 ?e)
+	     (I ?v2 ?e)
+	     (all (?v V)
+		  (implies (I ?v ?e)
+			   (or (= ?v ?v1)
+			       (= ?v ?v2))))))))
+    ; edges are incident with two faces
+    (all (?e E)
+     (exists (?f1 F)
+      (exists (?f2 F)
+        (and (not (= ?f1 ?f2))
+	     (I ?e ?f1)
+	     (I ?e ?f2)
+	     (all (?f F)
+		  (implies (I ?e ?f)
+			   (or (= ?f1 f)
+			       (= ?f2 f))))))))
+    ; no disconnected vertices
+    (all (?v V) (exists (?e E) (I ?v ?e)))
+    ; no disconnected faces
+    (all (?f F) (exists (?e E) (I ?e ?f)))
+    ; all faces are triangles
+    (all (?f F) (exists (?e1 E)
+		 (exists (?e2 E)
+		   (exists (?e3 E)
+		     (and (not (= ?e1 ?e2))
+			  (not (= ?e2 ?e3))
+			  (not (= ?e3 ?e1))
+			  (I ?e1 ?f)
+			  (I ?e2 ?f)
+			  (I ?e3 ?f)
+			  (all (?e E)
+			       (implies (I ?e ?f)
+					(or (= ?e ?e1)
+					    (= ?e ?e2)
+					    (= ?e ?e3)))))))))))
+			 
+
 
 (defun steinitz-rademacher? (poly-str)
   "Determine whether a polyhedron is a Steinitz-Rademacher polyhedron."
