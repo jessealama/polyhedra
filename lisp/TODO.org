@@ -68,4 +68,6 @@
   final results.  Surely there's more information available.
 * TODO Revamp fitness function for polyhedron structures
   Linear combinations -- weights attached to specific axioms -- is a
-  low-hanging fruit.
+  low-hanging fruit.  But how to assign weights?  Should I permit
+  negative values?  Non-integral values?
+* TODO Put this on github

@@ -160,20 +160,6 @@
 		     F)
 	      (equal (array-dimensions I) (list n n))))))
 
-(defun upto (n)
-  "The list of integers from 0 to N, exclusive."
-  (let (l)
-    (dotimes (i n (reverse l))
-      (push i l))))
-
-(defun from-to (m n)
-  "The list of integers starting with (i.e., including) M, going up to but exlcuding N."
-  (when (<= m n)
-    (let (l)
-      (do ((i m (1+ i)))
-	  ((= i n) (reverse l))
-	(push i l)))))
-
 (defun make-poly-str (genome incidence-matrix)
   (list (length genome)
 	genome
