@@ -1,5 +1,11 @@
 ;;; Polyhedra as incidence structures
 
+(defun top? (formula)
+  (eq (car formula) 'top))
+
+(defun bottom? (formula)
+  (eq (car formula) 'bottom))
+
 (defun negation? (formula)
   (eq (car formula) 'not))
 
@@ -198,7 +204,9 @@
 
 (defun true? (formula poly-str assign)
   "Is FORMULA true in POLY-STR with respect to ASSIGN?"
-  (cond ((negation? formula)
+  (cond ((top? formula) t)
+	((bottom? formula) nil)
+	((negation? formula)
 	 (not (true? (unnegate formula) poly-str assign)))
 	((implication? formula)
 	 (or (not (true? (antecedent formula) poly-str assign))
