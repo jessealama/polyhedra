@@ -5,7 +5,7 @@
 
 (defun random-poly-str-genome (length)
   (let ((genome (make-array (list length))))
-    (dolist (i length genome)
+    (dotimes (i length genome)
       (setf (aref genome i) (random 3)))))
 
 (defun random-typed-poly-str-genome (length)
