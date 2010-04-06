@@ -38,4 +38,29 @@
 	((= i n) (reverse l))
       (push x l))))
 
+;;; Array utilities
+
+(defmacro with-gensyms (symbols &body body)
+  `(let ,(mapcar #'(lambda (s) `(,s (gensym))) symbols)
+     ,@body))
+
+(defmacro do-square (x y dim &body body)
+  `(dotimes (,x ,dim)
+     (dotimes (,y ,dim)
+       ,@body)))
+
+(defun copy-square-matrix (matrix)
+  (let* ((dim (array-dimensions matrix))
+	 (m (make-array dim)))
+    (do-square x y (car dim)
+      (setf (aref m x y) (aref matrix x y)))
+    m))
+
+(defun invert (matrix i j) ;; this could be a macro -- see chapter 12 of On Lisp
+  (let ((val (aref matrix i j)))
+    (if (zerop val)
+	(setf (aref matrix i j) 1)
+	(setf (aref matrix i j) 0))
+    matrix))
+
 ;;; utils.lisp ends here
