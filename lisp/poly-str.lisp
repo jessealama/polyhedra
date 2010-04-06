@@ -361,7 +361,7 @@ according to the typed presentation of the axioms."
 	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
 	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-	     (0 0 0 0 0 0 0 0 0 0 0 0 0 0))))
+	    (0 0 0 0 0 0 0 0 0 0 0 0 0 0))))
 
 (defvar simplest-sr-poly
   (list 6
