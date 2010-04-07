@@ -101,8 +101,8 @@ all f1 all f2 ((face(f1) & face(f2) & all e (edge(e) -> (i2(e,f1) <-> i2(e,f2)))
 % all x all y (x = y | (i1(x,y) | i2(x,y) | i3(x,y))).
 
 % width 2: everything is connected by a path of length 2 to every other thing
-all x all y (x = y 
-             | (i1(x,y) | i2(x,y) | i3(x,y))
-	     | exists z ((i1(x,z) | i2(x,z) | i3(x,z)) & (i1(z,y) | i2(z,y) | i3(z,y)))).
+% all x all y (x = y 
+%              | (i1(x,y) | i2(x,y) | i3(x,y))
+% 	     | exists z ((i1(x,z) | i2(x,z) | i3(x,z)) & (i1(z,y) | i2(z,y) | i3% (z,y)))).
 
 end_of_list.
