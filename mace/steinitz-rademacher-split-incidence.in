@@ -63,7 +63,7 @@ all x (edge(x) -> exists y exists z (y != z & face(y) & face(z) & i2(x,y) & i2(x
 all v all f (vertex(v) & face(f) & i3(v,f) -> exists e1 exists e2 (edge(e1) & edge(e2) & e1 != e2 & i1(v,e1) & i1(v,e2) & all e ((edge(e) & i1(v,e) & i2(e,f)) -> (e = e1 | e = e2)))).
 
 % two faces can share at most one edge
-all f1 all f2 all e1 all e2 all e3 ((face(f1) & face(f2) & edge(e1) & edge(e2) &edge(e3) & i2(e1,f1) & i2(e2,f1) & i2(e3,f1) & i2(e1,f2) & i2(e2,f2) & i2(e3,f2)) -> (e1 = e2 | e1 = e3 | e2 = e3)).
+all f1 all f2 all e1 all e2 all e3 ((face(f1) & face(f2) & f1 != f2 & edge(e1) & edge(e2) & edge(e3) & i2(e1,f1) & i2(e2,f1) & i2(e3,f1) & i2(e1,f2) & i2(e2,f2) & i2(e3,f2)) -> (e1 = e2 | e1 = e3 | e2 = e3)).
 
 % every vertex is incident with something
 % all v (vertex(v) -> exists x i(v,x)).
