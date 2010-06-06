@@ -22,12 +22,12 @@
 { f8 : vertex -> face }
 { f9 : face -> vertex }
 { f10 : face -> edge }
-{ f11 : vertex vertex -> edge }
-{ f12 : vertex vertex -> face }
-{ f13 : edge edge -> vertex }
-{ f14 : edge edge -> face }
-{ f15 : face face -> vertex }
-{ f16 : face face -> edge }
+% { f11 : vertex vertex -> edge }
+% { f12 : vertex vertex -> face }
+% { f13 : edge edge -> vertex }
+% { f14 : edge edge -> face }
+% { f15 : face face -> vertex }
+% { f16 : face face -> edge }
 
 %% variables
 < v : vertex >
@@ -62,15 +62,15 @@
 [ i3(v,f8(v)) ]
 [ i3(f9(f),f) ]
 [ i2(f10(f),f) ]
-[ i1(v1,f11(v1,v2)) | i1(v2,f11(v1,v2)) | v2 = v1 ]
-[ -i1(v1,f11(v1,v2)) | -i1(v2,f11(v1,v2)) | v2 = v1 ]
-[ i3(v1,f12(v1,v2)) | i3(v2,f12(v1,v2)) | v2 = v1 ]
-[ -i3(v1,f12(v1,v2)) | -i3(v2,f12(v1,v2)) | v2 = v1 ]
-[ i1(f13(e1,e2),e1) | i1(f13(e1,e2),e2) | e2 = e1 ]
-[ -i1(f13(e1,e2),e1) | -i1(f13(e1,e2),e2) | e2 = e1 ]
-[ i2(e1,f14(e1,e2)) | i2(e2,f14(e1,e2)) | e2 = e1 ]
-[ -i2(e1,f14(e1,e2)) | -i2(e2,f14(e1,e2)) | e2 = e1 ]
-[ i3(f15(f1,f2),f1) | i3(f15(f1,f2),f2) | f2 = f1 ]
-[ -i3(f15(f1,f2),f1) | -i3(f15(f1,f2),f2) | f2 = f1 ]
-[ i2(f16(f1,f2),f1) | i2(f16(f1,f2),f2) | f2 = f1 ]
-[ -i2(f16(f1,f2),f1) | -i2(f16(f1,f2),f2) | f2 = f1 ]
+% [ i1(v1,f11(v1,v2)) | i1(v2,f11(v1,v2)) | v2 = v1 ]
+% [ -i1(v1,f11(v1,v2)) | -i1(v2,f11(v1,v2)) | v2 = v1 ]
+% [ i3(v1,f12(v1,v2)) | i3(v2,f12(v1,v2)) | v2 = v1 ]
+% [ -i3(v1,f12(v1,v2)) | -i3(v2,f12(v1,v2)) | v2 = v1 ]
+% [ i1(f13(e1,e2),e1) | i1(f13(e1,e2),e2) | e2 = e1 ]
+% [ -i1(f13(e1,e2),e1) | -i1(f13(e1,e2),e2) | e2 = e1 ]
+% [ i2(e1,f14(e1,e2)) | i2(e2,f14(e1,e2)) | e2 = e1 ]
+% [ -i2(e1,f14(e1,e2)) | -i2(e2,f14(e1,e2)) | e2 = e1 ]
+% [ i3(f15(f1,f2),f1) | i3(f15(f1,f2),f2) | f2 = f1 ]
+% [ -i3(f15(f1,f2),f1) | -i3(f15(f1,f2),f2) | f2 = f1 ]
+% [ i2(f16(f1,f2),f1) | i2(f16(f1,f2),f2) | f2 = f1 ]
+% [ -i2(f16(f1,f2),f1) | -i2(f16(f1,f2),f2) | f2 = f1 ]
