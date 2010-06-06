@@ -1,0 +1,64 @@
+%% Steinitz-Rademacher poyhedra
+
+%% Sorts
+
+( vertex [4] )
+( edge [6] )
+( face [4] )
+
+%% relations/functions
+{ i1 : vertex edge -> BOOL }
+{ i2 : edge face -> BOOL }
+{ i3 : vertex face -> BOOL }
+
+%% skolem functions
+{ f1 : edge -> vertex }
+{ f2 : edge -> vertex }
+{ f3 : edge -> face }
+{ f4 : edge -> face }
+{ f5 : vertex face -> edge }
+{ f6 : vertex face -> edge }
+{ f7 : vertex -> edge }
+{ f8 : vertex -> face }
+{ f9 : face -> vertex }
+{ f10 : face -> edge }
+{ f11 : vertex vertex -> edge }
+{ f12 : vertex vertex -> face }
+{ f13 : edge edge -> vertex }
+{ f14 : edge edge -> face }
+{ f15 : face face -> vertex }
+{ f16 : face face -> edge }
+
+%% Clauses
+-i1(x,y) | -i2(y,z) | i3(x,z)
+f2(x) != f1(x)
+i1(f1(x),x)
+i1(f2(x),x)
+-i1(x,y) | x = f1(y) | x = f2(y)
+f4(x) != f3(x)
+i2(x,f3(x))
+i2(x,f4(x))
+-i2(x,y) | y = f3(x) | y = f4(x)
+-i3(x,y) | f6(x,y) != f5(x,y)
+-i3(x,y) | i1(x,f5(x,y))
+-i3(x,y) | i1(x,f6(x,y))
+-i3(x,y) | i2(f5(x,y),y)
+-i3(x,y) | i2(f6(x,y),y)
+-i3(x,y) | -i(x,z) | -i(z,y) | z = f5(x,y) | z = f6(x,y)
+x = y | -i2(z,y) | -i2(u,y) | -i2(w,y) | -i2(z,x) | -i2(u,x) | -i2(w,x) | u = z | w = z | w = u
+i1(x,f7(x))
+i3(x,f8(x))
+i3(f9(x),x)
+i2(f10(x),x)
+i1(x,f11(x,y)) | i1(y,f11(x,y)) | y = x
+-i1(x,f11(x,y)) | -i1(y,f11(x,y)) | y = x
+i3(x,f12(x,y)) | i3(y,f12(x,y)) | y = x
+-i3(x,f12(x,y)) | -i3(y,f12(x,y)) | y = x
+i1(f13(x,y),x) | i1(f13(x,y),y) | y = x
+-i1(f13(x,y),x) | -i1(f13(x,y),y) | y = x
+i2(x,f14(x,y)) | i2(y,f14(x,y)) | y = x
+-i2(x,f14(x,y)) | -i2(y,f14(x,y)) | y = x
+i3(f15(x,y),x) | i3(f15(x,y),y) | y = x
+-i3(f15(x,y),x) | -i3(f15(x,y),y) | y = x
+i2(f16(x,y),x) | i2(f16(x,y),y) | y = x
+-i2(f16(x,y),x) | -i2(f16(x,y),y) | y = x
