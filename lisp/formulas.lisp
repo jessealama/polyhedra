@@ -78,6 +78,9 @@
 (defun equation? (formula)
   (eq (car formula) '=))
 
+(defun make-equation (lhs rhs)
+  (list '= lhs rhs))
+
 (defun unary-statement-argument (unary-statement)
   (cadr unary-statement))
 
