@@ -44,7 +44,7 @@
 [ -i3(x,y) | i1(x,f6(x,y)) ]
 [ -i3(x,y) | i2(f5(x,y),y) ]
 [ -i3(x,y) | i2(f6(x,y),y) ]
-[ -i3(x,y) | -i(x,z) | -i(z,y) | z = f5(x,y) | z = f6(x,y) ]
+[ -i3(x,y) | -i1(x,z) | -i2(z,y) | z = f5(x,y) | z = f6(x,y) ]
 [ x = y | -i2(z,y) | -i2(u,y) | -i2(w,y) | -i2(z,x) | -i2(u,x) | -i2(w,x) | u = z | w = z | w = u ]
 [ i1(x,f7(x)) ]
 [ i3(x,f8(x)) ]
