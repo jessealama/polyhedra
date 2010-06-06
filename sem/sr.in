@@ -29,36 +29,48 @@
 { f15 : face face -> vertex }
 { f16 : face face -> edge }
 
+%% variables
+< v : vertex >
+< v1 : vertex >
+< v2 : vertex >
+< e : edge >
+< e1 : edge >
+< e2 : edge >
+< e3 : edge >
+< f : face >
+< f1 : face >
+< f2 : face >
+
 %% Clauses
-[ -i1(x,y) | -i2(y,z) | i3(x,z) ]
-[ f2(x) != f1(x) ]
-[ i1(f1(x),x) ]
-[ i1(f2(x),x) ]
-[ -i1(x,y) | x = f1(y) | x = f2(y) ]
-[ f4(x) != f3(x) ]
-[ i2(x,f3(x)) ]
-[ i2(x,f4(x)) ]
-[ -i2(x,y) | y = f3(x) | y = f4(x) ]
-[ -i3(x,y) | f6(x,y) != f5(x,y) ]
-[ -i3(x,y) | i1(x,f5(x,y)) ]
-[ -i3(x,y) | i1(x,f6(x,y)) ]
-[ -i3(x,y) | i2(f5(x,y),y) ]
-[ -i3(x,y) | i2(f6(x,y),y) ]
-[ -i3(x,y) | -i1(x,z) | -i2(z,y) | z = f5(x,y) | z = f6(x,y) ]
-[ x = y | -i2(z,y) | -i2(u,y) | -i2(w,y) | -i2(z,x) | -i2(u,x) | -i2(w,x) | u = z | w = z | w = u ]
-[ i1(x,f7(x)) ]
-[ i3(x,f8(x)) ]
-[ i3(f9(x),x) ]
-[ i2(f10(x),x) ]
-[ i1(x,f11(x,y)) | i1(y,f11(x,y)) | y = x ]
-[ -i1(x,f11(x,y)) | -i1(y,f11(x,y)) | y = x ]
-[ i3(x,f12(x,y)) | i3(y,f12(x,y)) | y = x ]
-[ -i3(x,f12(x,y)) | -i3(y,f12(x,y)) | y = x ]
-[ i1(f13(x,y),x) | i1(f13(x,y),y) | y = x ]
-[ -i1(f13(x,y),x) | -i1(f13(x,y),y) | y = x ]
-[ i2(x,f14(x,y)) | i2(y,f14(x,y)) | y = x ]
-[ -i2(x,f14(x,y)) | -i2(y,f14(x,y)) | y = x ]
-[ i3(f15(x,y),x) | i3(f15(x,y),y) | y = x ]
-[ -i3(f15(x,y),x) | -i3(f15(x,y),y) | y = x ]
-[ i2(f16(x,y),x) | i2(f16(x,y),y) | y = x ]
-[ -i2(f16(x,y),x) | -i2(f16(x,y),y) | y = x ]
+[ -i1(v,e) | -i2(e,f) | i3(v,f) ]
+[ f2(e) != f1(e) ]
+[ i1(f1(e),e) ]
+[ i1(f2(e),e) ]
+[ -i1(v,e) | v = f1(e) | v = f2(e) ]
+[ f4(e) != f3(e) ]
+[ i2(e,f3(e)) ]
+[ i2(e,f4(e)) ]
+[ -i2(e,f) | f = f3(e) | f = f4(e) ]
+[ -i3(v,f) | f6(v,f) != f5(v,f) ]
+[ -i3(v,f) | i1(v,f5(v,f)) ]
+[ -i3(v,f) | i1(v,f6(v,f)) ]
+[ -i3(v,f) | i2(f5(v,f),f) ]
+[ -i3(v,f) | i2(f6(v,f),f) ]
+[ -i3(v,f) | -i1(v,e) | -i2(e,f) | e = f5(v,f) | e = f6(v,f) ]
+[ f1 = f2 | -i2(e1,f2) | -i2(e2,f2) | -i2(e3,f2) | -i2(e1,f1) | -i2(e2,f1) | -i2(e3,f1) | e2 = e1 | e3 = e1 | e3 = e2 ]
+[ i1(v,f7(v)) ]
+[ i3(v,f8(v)) ]
+[ i3(f9(f),f) ]
+[ i2(f10(f),f) ]
+[ i1(v1,f11(v1,v2)) | i1(v2,f11(v1,v2)) | v2 = v1 ]
+[ -i1(v1,f11(v1,v2)) | -i1(v2,f11(v1,v2)) | v2 = v1 ]
+[ i3(v1,f12(v1,v2)) | i3(v2,f12(v1,v2)) | v2 = v1 ]
+[ -i3(v1,f12(v1,v2)) | -i3(v2,f12(v1,v2)) | v2 = v1 ]
+[ i1(f13(e1,e2),e1) | i1(f13(e1,e2),e2) | e2 = e1 ]
+[ -i1(f13(e1,e2),e1) | -i1(f13(e1,e2),e2) | e2 = e1 ]
+[ i2(e1,f14(e1,e2)) | i2(e2,f14(e1,e2)) | e2 = e1 ]
+[ -i2(e1,f14(e1,e2)) | -i2(e2,f14(e1,e2)) | e2 = e1 ]
+[ i3(f15(f1,f2),f1) | i3(f15(f1,f2),f2) | f2 = f1 ]
+[ -i3(f15(f1,f2),f1) | -i3(f15(f1,f2),f2) | f2 = f1 ]
+[ i2(f16(f1,f2),f1) | i2(f16(f1,f2),f2) | f2 = f1 ]
+[ -i2(f16(f1,f2),f1) | -i2(f16(f1,f2),f2) | f2 = f1 ]
