@@ -17,8 +17,6 @@ all x (edge(x) -> -face(x)).
 
 % Symmetric incidence relation
 all x all y (i(x,y) -> i(y,x)).
-% non-symmetric incidence relation
-% all x all y (i(x,y) -> -i(y,x)).
 
 % No two objects of the same type are incident
 all x all y ((vertex(x) & vertex(y)) -> -i(x,y)).
