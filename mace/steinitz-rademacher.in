@@ -48,23 +48,4 @@ all v (vertex(v) -> exists e exists f (edge(e) & face(f) & i(v,e) & i(v,f))).
 % Stronger form: every face is incident with one edge and one vertex
 all f (face(f) -> exists v exists e (vertex(v) & edge(e) & i(v,f) & i(e,f))).
 
-% simpliciality: every face is a triangle
-% all f (face(f) -> exists e1 exists e2 exists e3 (edge(e1) & edge(e2) & edge(e3) & e1 != e2 & e2 != e3 & e3 != e1 & i(e1,f) & i(e2,f) & i(e3,f) & all e ((edge(e) & i(e,f)) -> (e = e1 | e = e2 | e = e3)))).
-% weakening: every face has at least three edges (rules out cases where faces have exactly two edges)
-%all f (face(f) -> exists e1 exists e2 exists e3 (edge(e1) & edge(e2) & edge(e3) & e1 != e2 & e2 != e3 & e1 != e3 & i(e1,f) & i(e2,f) & i(e3,f))).
-
-% extensionality
-% for vertices
-%all v1 all v2 ((vertex(v1) & vertex(v2) & all e (edge(e) -> (i(v1,e) <-> i(v2,e)))) -> (v1 = v2)).
-%all v1 all v2 ((vertex(v1) & vertex(v2) & all f (face(f) -> (i(v1,f) <-> i(v2,f)))) -> (v1 = v2)).
-% for edges
-%all e1 all e2 ((edge(e1) & edge(e2) & all v (vertex(v) -> (i(v,e1) <-> i(v,e2)))) -> (e1 = e2)).
-%all e1 all e2 ((edge(e1) & edge(e2) & all f (face(f) -> (i(e1,f) <-> i(e2,f)))) -> (e1 = e2)).
-% for faces
-%all f1 all f2 ((face(f1) & face(f2) & all v (vertex(v) -> (i(v,f1) <-> i(v,f2)))) -> (f1 = f2)).
-%all f1 all f2 ((face(f1) & face(f2) & all e (edge(e) -> (i(e,f1) <-> i(e,f2)))) -> (f1 = f2)).
-
-% card 6 test
-% exists x0 exists x1 exists x2 exists x3 exists x4 exists x5 (vertex(x0) & vertex(x1) & edge(x2) & edge(x3) & face(x4) & face(x5) & x0 != x1 & x2 != x3 & x4 != x5 & (all x (vertex(x) -> (x = x0 | x = x1))) & (all x (edge(x) -> (x = x2 | x = x3))) & (all x (face(x) -> (x = x4 | x = x5))) & -(i(x0,x2) & i(x1,x2) & i(x0,x3) & i(x1,x3) & i(x2,x4) & i(x2,x5) & i(x3,x4) & i(x3,x5))).
-
 end_of_list.
