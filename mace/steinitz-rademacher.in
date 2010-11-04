@@ -2,50 +2,48 @@ formulas(sos).
 
 % Setting up the language: three types of objects, one incidence relation
 
-% Everything is either a vertex, edge, or face
-all x (vertex(x) | edge(x) | face(x)).
-
 % Non-triviality
-exists x (vertex(x)).
-exists x (edge(x)).
-exists x (face(x)).
+exists x (vertex(x)) # label("SR1-vertex").
+exists x (edge(x)) # label("SR1-edge").
+exists x (face(x)) # label("SR1-face").
+all x (vertex(x) -> -edge(x)) # label("SR1-disjoint-vertex-edge").
+all x (vertex(x) -> -face(x)) # label("SR1-disjoint-vertex-face").
+all x (edge(x) -> -face(x)) # label("SR1-disjoint-edge-face").
 
-% The sets of vertices, edges, and faces are disjoint
-all x (vertex(x) -> -edge(x)).
-all x (vertex(x) -> -face(x)).
-all x (edge(x) -> -face(x)).
+% Everything is either a vertex, edge, or face
+all x (vertex(x) | edge(x) | face(x)) # label("SR2").
 
 % Symmetric incidence relation
-all x all y (i(x,y) -> i(y,x)).
+all x all y (i(x,y) -> i(y,x))  # label("SR3").
 
 % No two objects of the same type are incident
-all x all y ((vertex(x) & vertex(y)) -> -i(x,y)).
-all x all y ((edge(x) & edge(y)) -> -i(x,y)).
-all x all y ((face(x) & face(y)) -> -i(x,y)).
+all x all y ((vertex(x) & vertex(y)) -> -i(x,y)) # label("SR4-vertex").
+all x all y ((edge(x) & edge(y)) -> -i(x,y)) # label("SR4-edge").
+all x all y ((face(x) & face(y)) -> -i(x,y)) # label("SR4-face").
 
 % "Transitivity"
-all x all y all z ((vertex(x) & edge(y) & face(z) & i(x,y) & i(y,z)) -> i(x,z)).
+all x all y all z ((vertex(x) & edge(y) & face(z) & i(x,y) & i(y,z)) -> i(x,z)) # label("SR5").
 
 % every edge is incident with at exactly two vertices
-all x (edge(x) -> exists y exists z (y != z & vertex(y) & vertex(z) & i(y,x) & i(z,x) & all w (vertex(w) & i(w,x) -> (w = y | w = z)))).
+all x (edge(x) -> exists y exists z (y != z & vertex(y) & vertex(z) & i(y,x) & i(z,x) & all w (vertex(w) & i(w,x) -> (w = y | w = z)))) # label("SR6").
 
 % every edge is incident with at exactly two faces
-all x (edge(x) -> exists y exists z (y != z & face(y) & face(z) & i(x,y) & i(x,z) & all w (face(w) & i(x,w) -> (w = y | w = z)))).
+all x (edge(x) -> exists y exists z (y != z & face(y) & face(z) & i(x,y) & i(x,z) & all w (face(w) & i(x,w) -> (w = y | w = z)))) # label("SR7").
 
 % for every vertex v and every face f such that v is incident to f, there exactly two edges that are indicent with both v and f
-all v all f (vertex(v) & face(f) & i(v,f) -> exists e1 exists e2 (edge(e1) & edge(e2) & e1 != e2 & i(v,e1) & i(v,e2) & all e ((edge(e) & i(v,e) & i(e,f)) -> (e = e1 | e = e2)))).
+all v all f (vertex(v) & face(f) & i(v,f) -> exists e1 exists e2 (edge(e1) & edge(e2) & e1 != e2 & i(v,e1) & i(v,e2) & all e ((edge(e) & i(v,e) & i(e,f)) -> (e = e1 | e = e2)))) # label("SR8").
 
 % two faces can share at most one edge
-all f1 all f2 all e1 all e2 ((face(f1) & face(f2) & f1 != f2 & edge(e1) & edge(e2) & i(e1,f1) & i(e2,f1) & i(e1,f2) & i(e2,f2)) -> e1 = e2).
+all f1 all f2 all e1 all e2 ((face(f1) & face(f2) & f1 != f2 & edge(e1) & edge(e2) & i(e1,f1) & i(e2,f1) & i(e1,f2) & i(e2,f2)) -> e1 = e2) # label("SR9").
 
 % every vertex is incident with something
 % all v (vertex(v) -> exists x i(v,x)).
-% Stronger form: every vertex is incident with an edge and a face
-all v (vertex(v) -> exists e exists f (edge(e) & face(f) & i(v,e) & i(v,f))).
+% Stronger form: every vertex is incident with a face
+all v (vertex(v) -> exists f (face(f) & i(v,f))) # label("SR10-vertex").
 
 % every face is incident with something
 % all f (face(f) -> exists x (i(x,f))).
 % Stronger form: every face is incident with one edge and one vertex
-all f (face(f) -> exists v exists e (vertex(v) & edge(e) & i(v,f) & i(e,f))).
+-(all f (face(f) -> exists v (vertex(v) & i(v,f)))) # label("SR10-face").
 
 end_of_list.
